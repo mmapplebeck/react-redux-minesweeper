@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Game from '../components/Game'
-import {getGridLayout, getStatus, getRemainingFlagsCount} from '../selectors'
+import {getGridLayout, getStatus, getRemainingFlagsCount, getGameOver} from '../selectors'
 import {resetGame} from '../actions/game'
 import {toThreeDigits} from '../utils'
 
@@ -8,7 +8,8 @@ const mapStateToProps = state => ({
   cells: state.game.cells,
   layout: getGridLayout(state),
   status: getStatus(state),
-  remainingFlagsCount: toThreeDigits(getRemainingFlagsCount(state))
+  remainingFlagsCount: toThreeDigits(getRemainingFlagsCount(state)),
+  gameOver: getGameOver(state)
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -37,6 +37,7 @@ export default class Cell extends Component {
   ignoreClick() {
     return this.props.gameOver || this.props.flagged || this.props.open
   }
+
   onMouseDown(e) {
     if (this.ignoreClick() || e.button !== 0) return
     this.props.toggleOpening()
@@ -52,7 +53,6 @@ export default class Cell extends Component {
     if (!this.props.started) this.props.startGame()
     if (this.props.opening) this.props.toggleOpening()
     this.props.openCell()
-    if (this.props.armed) this.props.endGame()
   }
 
   onContextMenu(e) {
