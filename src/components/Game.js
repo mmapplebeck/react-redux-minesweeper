@@ -6,19 +6,19 @@ import Grid from './Grid'
 import '../style/game.scss'
 
 export default class Game extends Component {
-  componentDidUpdate() {
-    if (this.props.gameOver) this.props.endGame()
+  componentDidUpdate(prevProps) {
+    if (this.props.gameOver && !prevProps.gameOver) this.props.endGame()
   }
 
   render() {
     return (
       <div className="game">
         <div className="game__hud">
-          <Counter count={props.remainingFlagsCount} />
-          <ResetButton status={props.status} onClick={props.resetGame} />
+          <Counter count={this.props.remainingFlagsCount} />
+          <ResetButton status={this.props.status} onClick={this.props.resetGame} />
           <Timer />
         </div>
-        <Grid layout={props.layout} cells={props.cells} />
+        <Grid layout={this.props.layout} cells={this.props.cells} />
       </div>
     )
   }

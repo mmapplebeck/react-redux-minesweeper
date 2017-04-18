@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import Game from '../components/Game'
 import {getGridLayout, getStatus, getRemainingFlagsCount, getGameOver} from '../selectors'
-import {resetGame} from '../actions/game'
+import {resetGame, endGame} from '../actions/game'
 import {toThreeDigits} from '../utils'
 
 const mapStateToProps = state => ({
@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  resetGame: () => dispatch(resetGame())
+  resetGame: () => dispatch(resetGame()),
+  endGame: () => dispatch(endGame())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game)
