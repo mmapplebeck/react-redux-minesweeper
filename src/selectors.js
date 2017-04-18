@@ -54,5 +54,5 @@ export const getGameOver = createSelector(
 
 export const getStarted = createSelector(
   getCellCounts,
-  cellCounts => cellCounts.openCount > 0
+  cellCounts => cellCounts.openCellCount > 0
 )
