@@ -1,0 +1,15 @@
+@import "colors";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  background-color: $color-windows-teal;
+  font-family: sans-serif;
+}
+
+.app {
+  display: flex;
+}

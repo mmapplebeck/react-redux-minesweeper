@@ -1,0 +1,12 @@
+@import "colors";
+
+.grid {
+  border-top: .25rem solid $color-dark-gray;
+  border-right: .25rem solid white;
+  border-bottom: .25rem solid white;
+  border-left: .25rem solid $color-dark-gray;
+}
+
+.grid__row {
+  display: flex;
+}
