@@ -50,7 +50,10 @@ export default class Cell extends Component {
 
   onClick(e) {
     if (this.ignoreClick()) return
-    if (!this.props.started) this.props.startGame()
+    if (!this.props.started) {
+      this.props.startGame()
+      if (this.props.armed) this.props.moveMine()
+    }
     if (this.props.opening) this.props.toggleOpening()
     this.props.openCell()
   }

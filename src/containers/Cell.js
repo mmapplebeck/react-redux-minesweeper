@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import Cell from '../components/Cell'
 import {startGame, endGame} from '../actions/game'
-import {openCell, toggleFlag, toggleOpening} from '../actions/cells'
+import {openCell, toggleFlag, toggleOpening, moveMine} from '../actions/cells'
 import {getRemainingFlagsCount, getStarted, getGameOver} from '../selectors'
 
 const mapStateToProps = state => ({
@@ -15,7 +15,8 @@ const mapDispatchToProps = (dispatch, {id}) => ({
   toggleOpening: () => dispatch(toggleOpening(id)),
   toggleFlag: () => dispatch(toggleFlag(id)),
   startGame: () => dispatch(startGame()),
-  endGame: () => dispatch(endGame())
+  endGame: () => dispatch(endGame()),
+  moveMine: () => dispatch(moveMine(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cell)

@@ -1,7 +1,8 @@
 import {INITIAL_STATE as INITIAL_SETTINGS} from './settings'
-import {OPEN_CELLS, OPEN_CELL, TOGGLE_FLAG, TOGGLE_OPENING} from '../../actions/cells'
+import {OPEN_CELLS, OPEN_CELL, TOGGLE_FLAG, TOGGLE_OPENING, TOGGLE_ARMED, INCREMENT_ADJACENT_MINE_COUNT, DECREMENT_ADJACENT_MINE_COUNT} from '../../actions/cells'
 import {END_GAME, RESET_GAME} from '../../actions/game'
 import {getAdjacentCellIds, getGridLayoutUtil} from '../../utils'
+import {getGridLayout} from '../../selectors'
 
 export const generateCells = (settings) => {
   let cells = {}
@@ -56,6 +57,18 @@ const cell = (state = {}, action) => {
       return Object.assign({}, state, {
         flagged: !state.flagged
       })
+    case TOGGLE_ARMED:
+      return Object.assign({}, state, {
+        armed: !state.armed
+      })
+    case INCREMENT_ADJACENT_MINE_COUNT:
+      return Object.assign({}, state, {
+        adjacentMineCount: state.adjacentMineCount + 1
+      })
+    case DECREMENT_ADJACENT_MINE_COUNT:
+      return Object.assign({}, state, {
+        adjacentMineCount: state.adjacentMineCount - 1
+      })
     case END_GAME:
       return Object.assign({}, state, {
         open: state.flagged ? false : (state.armed ? true : state.open)
@@ -65,15 +78,21 @@ const cell = (state = {}, action) => {
   }
 }
 
+const cells = (state = {}, action) => {
+  return action.payload
+    .map(id => ({
+      [id]: cell(state[id], action)
+    }))
+    .reduce((cells, cell) => Object.assign({}, cells, cell), {})
+}
+
 export default (state = INITIAL_STATE, action) => {
   switch(action.type) {
     case OPEN_CELLS:
-      const cells = action.payload
-        .map(id => ({
-          [id]: cell(state[id], action)
-        }))
-        .reduce((cells, cell) => Object.assign({}, cells, cell), {})
-      return Object.assign({}, state, cells)
+    case TOGGLE_ARMED:
+    case INCREMENT_ADJACENT_MINE_COUNT:
+    case DECREMENT_ADJACENT_MINE_COUNT:
+      return Object.assign({}, state, cells(state, action))
     case OPEN_CELL:
     case TOGGLE_FLAG:
     case TOGGLE_OPENING:
