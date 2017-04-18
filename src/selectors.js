@@ -35,7 +35,7 @@ export const getStatus = createSelector(
   getCellCounts,
   ({mineCount}, cellCounts) => {
     if (cellCounts.detonatedCellCount > 0) return STATUS.FAILED
-    if (cellCounts.openCellCount === cellCounts.totalCellCount - mineCount) return STATUS.CLEARED
+    if (cellCounts.openCellCount >= cellCounts.totalCellCount - mineCount) return STATUS.CLEARED
     if (cellCounts.openingCellCount > 0) return STATUS.DANGER
     return STATUS.NEUTRAL
   }
