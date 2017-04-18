@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import '../style/reset-button.scss'
 
 export default props => (

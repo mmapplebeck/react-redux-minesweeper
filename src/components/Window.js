@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import '../style/window.scss'
 
 export default props => (
