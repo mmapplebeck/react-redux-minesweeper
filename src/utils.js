@@ -3,15 +3,21 @@ export const toThreeDigits = num => {
 }
 
 export const getGridLayoutUtil = settings => {
+  // Could do the following if you're open to lodash
+  let range = _.range(1, (settings.rowCount * settings.colCount) + 1)
+  return _.chunk(range, settings.colCount)
+  /*
   let layout = []
   for (let i = 0; i < settings.rowCount; i++) {
     let row = []
     layout.push(row)
     for (let j = 0; j < settings.colCount; j++) {
+      // If you decide to keep this, you could move the i * settings.rowCount calculation out of this loop since it doesn't change within it
       row.push((i * settings.rowCount) + j)
     }
   }
   return layout
+  */
 }
 
 export const getAdjacentCellIds = (grid, origin) => {
