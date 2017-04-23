@@ -54,9 +54,11 @@ const cell = (state = {}, action) => {
         opening: !state.opening
       })
     case TOGGLE_FLAG:
-      return Object.assign({}, state, {
+      // Could use the ES7 object spread operator instead of Object.assign throughout this project
+      return {
+        ...state,
         flagged: !state.flagged
-      })
+      }
     case TOGGLE_ARMED:
       return Object.assign({}, state, {
         armed: !state.armed
@@ -84,6 +86,15 @@ const cells = (state = {}, action) => {
       [id]: cell(state[id], action)
     }))
     .reduce((cells, cell) => Object.assign({}, cells, cell), {})
+    /*    
+    // The line above creates a new object and copies cells on every iteration.
+    // Would be more efficient to just loop over the elements once and mutate the same object like below.
+    // Note that this implementation replaces the above map and reduce calls.
+    .reduce((cells, id) => {
+      cells[id] = cell(state[id], action)
+      return cells
+    }, {});
+    */
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -103,6 +114,7 @@ export default (state = INITIAL_STATE, action) => {
       return Object.keys(state)
         .map(id => ({
           [id]: cell(state[id], action)
+        // Same issue with copying the cells object repeatedly
         })).reduce((cells, cell) => Object.assign({}, cells, cell), {})
     case RESET_GAME:
       return generateCells(action.payload)
