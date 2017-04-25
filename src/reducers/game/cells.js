@@ -45,45 +45,51 @@ const cell = (state = {}, action) => {
   switch(action.type) {
     case OPEN_CELLS:
     case OPEN_CELL:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         open: true,
         detonated: state.armed ? true : state.detonated
-      })
+      }
     case TOGGLE_OPENING:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         opening: !state.opening
-      })
+      }
     case TOGGLE_FLAG:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         flagged: !state.flagged
-      })
+      }
     case TOGGLE_ARMED:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         armed: !state.armed
-      })
+      }
     case INCREMENT_ADJACENT_MINE_COUNT:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         adjacentMineCount: state.adjacentMineCount + 1
-      })
+      }
     case DECREMENT_ADJACENT_MINE_COUNT:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         adjacentMineCount: state.adjacentMineCount - 1
-      })
+      }
     case END_GAME:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         open: state.flagged ? false : (state.armed ? true : state.open)
-      })
+      }
     default:
       return state
   }
 }
 
 const cells = (state = {}, action) => {
-  return action.payload
-    .map(id => ({
-      [id]: cell(state[id], action)
-    }))
-    .reduce((cells, cell) => Object.assign({}, cells, cell), {})
+  return action.payload.reduce((cells, id) => {
+    cells[id] = cell(state[id], action)
+    return cells
+  }, {})
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -100,10 +106,10 @@ export default (state = INITIAL_STATE, action) => {
         [action.payload]: cell(state[action.payload], action)
       })
     case END_GAME:
-      return Object.keys(state)
-        .map(id => ({
-          [id]: cell(state[id], action)
-        })).reduce((cells, cell) => Object.assign({}, cells, cell), {})
+      return Object.keys(state).reduce((cells, id) => {
+        cells[id] = cell(state[id], action)
+        return cells
+      }, {})
     case RESET_GAME:
       return generateCells(action.payload)
     default:
